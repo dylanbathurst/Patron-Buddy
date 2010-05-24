@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>PATRON Buddy!</title>
+  
+  <link rel="stylesheet" href="styles.css" type="text/css" media="screen" />
+  
+</head>
+<body>
+<h1><img src="imgs/patron.png" />PATRON Buddy!</h1>
+<div id="input">
+  <form action="" method="get" id="inputForm">
+    <p>First thing's first - What is our api key?</p>
+    <p><input type="text" name="apiKey" value="" id="apiKey" /></p>
+    <select name="controller" id="controller">
+      <option value="Product">Product</option>
+      <option value="Search">Search</option>
+    </select>
+    
+    <label id="idLabel" for="productId">id(s) : (comma delimited)</label><input type="text" name="productId" value="" id="productId" />
+    
+    <div id="searchOptions">
+      <label for="sort">Sorting : </label><input type="text" name="sort" value="" id="sort" />
+      <label for="limit">Limit : </label><input type="text" name="limit" value="" id="limit" />
+      <label for="page">Page : </label><input type="text" name="page" value="" id="page" />
+      <label for="facets">Facets : </label><input type="text" name="facets" value="" id="facets" />
+      <label for="filters">Filters : </label><input type="text" name="filters" value="" id="filters" />
+    </div>
+    
+    <label for="includes">Includes : (comma delimited)</label><input type="text" name="includes" value="" id="includes" />
+    
+    <label for="excludes">Excludes : (comma delimited)</label><input type="text" name="excludes" value="" id="excludes" />
+    
+    <p><input type="submit" value="GET"></p>
+  </form>
+</div>
+
+<input type="text" name="output" placeholder="http://api.zappos.com/" value="" id="output" />
+
+<div id="request"></div>
+
+
+<!--Loading jquery via google.load-->
+<script src="http://www.google.com/jsapi"></script>
+<script type="text/javascript" charset="utf-8">
+google.load("jquery", "1.4.2");
+</script>
+<!--end google.load-->
+<script src="pbuddy.js"></script>
+</body>
+</html>

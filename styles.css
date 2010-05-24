@@ -1,0 +1,11 @@
+@-webkit-keyframes slideIn {from {top:-200px;}to {top:0px;}}
+
+* {margin:0; padding:0;}
+html {}
+body {width:960px; margin:0 auto;}
+#output {font-size:20px; padding:10px; width:95%;}
+#inputForm label {display:block;}
+h1 {position:relative; margin:20px 0; padding:0 0 0 60px; -webkit-animation-name: slideIn; -webkit-animation-duration: 1s; -webkit-animation-iteration-count: 1; -webkit-animation-direction: alternate;}
+h1 img {position:absolute; left:0; top:-20px; width:50px; -webkit-transition: all .1s ease-in-out;}
+h1 img:hover {-webkit-transform: rotate(-30deg); -moz-transform: rotate(-30deg);}
+#searchOptions {display:none;}
