@@ -1,11 +1,30 @@
 @-webkit-keyframes slideIn {from {top:-200px;}to {top:0px;}}
 
 * {margin:0; padding:0;}
-html {}
-body {width:960px; margin:0 auto;}
-#output {font-size:20px; padding:10px; width:95%;}
-#inputForm label {display:block;}
+html {background:url('http://dev.zeta.zappos.com:8080/imgs/bg.20100524165743.png') repeat left top;}
+body {width:960px; margin:0 auto; font-family:Verdana,Arial,sans; font-size:14px;}
+a {color:#2C5987; text-decoration:none;}
+#input {float:left; width:100%; margin:20px 0 0;}
+#output {font-size:20px; padding:10px; width:936px;}
+#recents {margin:10px 0 10px 20px; font-size:12px;}
+#inputForm label {display:block; margin:8px 0 3px;}
 h1 {position:relative; margin:20px 0; padding:0 0 0 60px; -webkit-animation-name: slideIn; -webkit-animation-duration: 1s; -webkit-animation-iteration-count: 1; -webkit-animation-direction: alternate;}
 h1 img {position:absolute; left:0; top:-20px; width:50px; -webkit-transition: all .1s ease-in-out;}
 h1 img:hover {-webkit-transform: rotate(-30deg); -moz-transform: rotate(-30deg);}
 #searchOptions {display:none;}
+
+#request {display:none; margin:10px 0; padding:10px; background:#fff; -moz-border-radius:5px; -webkit-border-radius:5px;}
+#request pre {font-family:Verdana;}
+
+/* Form Specific */
+input {width:200px; padding:3px; border:2px solid #999; -moz-border-radius:5px; -webkit-border-radius:5px;}
+.comma {border-color:#558ABE;}
+.single {border-color:#A4B344;}
+.complex {border-color:#992812;}
+#apiKey {width:210px;}
+#controller {width:210px; margin:8px 0 0;}
+#submit {padding:5px; margin:8px 0; width:35px;}
+
+/* Form Key */
+#formKey {float:right; width:200px;}
+#formKey input {margin:3px 0 2px;}

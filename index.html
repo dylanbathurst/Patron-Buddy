@@ -1,45 +1,49 @@
 <!DOCTYPE html>
-
 <html>
 <head>
   <title>Patron Buddy!</title>
-  
   <link rel="stylesheet" href="styles.css" type="text/css" media="screen" />
-  
 </head>
 <body>
 <h1><img src="imgs/patron.png" />Patron Buddy!!!</h1>
 <div id="input">
+  <p id="formKey">
+    <input type="text" name="comma" value="Comma Separated Values" id="comma" class="comma" />
+    <input type="text" name="single" value="Single Value" id="single" class="single" />
+    <input type="text" name="single" value="Complex ex. colorFacet,Blue/size,8" id="single" class="complex" />
+  </p>
   <form action="" method="get" id="inputForm">
-    <p>First thing's first - What is our api key?</p>
-    <p><input type="text" name="apiKey" value="" id="apiKey" /></p>
+    <p>API key: <a href="http://groups.google.com/group/zappos_api/browse_thread/thread/b7e9432b70e3f0e0">Need One?</a></p>
+    <p><input class="single" type="text" name="apiKey" value="" id="apiKey" /></p>
     <select name="controller" id="controller">
-      <option value="Product">Product</option>
-      <option value="Search">Search</option>
+      <option value="Product">Product Controller</option>
+      <option value="Search">Search Controller</option>
     </select>
     
-    <label id="idLabel" for="productId">id(s) : (comma delimited)</label><input type="text" name="productId" value="" id="productId" />
+    <label id="idLabel" for="productId">id(s):</label>
+    <input class="comma" type="text" name="productId" value="" id="productId" />
     
     <div id="searchOptions">
-      <label for="sort">Sorting : </label><input type="text" name="sort" value="" id="sort" />
-      <label for="limit">Limit : </label><input type="text" name="limit" value="" id="limit" />
-      <label for="page">Page : </label><input type="text" name="page" value="" id="page" />
-      <label for="facets">Facets : </label><input type="text" name="facets" value="" id="facets" />
-      <label for="filters">Filters : </label><input type="text" name="filters" value="" id="filters" />
+      <label for="sort">Sorting: </label><input class="comma" type="text" name="sort" value="" id="sort" />
+      <label for="limit">Limit: </label><input class="single" type="text" name="limit" value="" id="limit" />
+      <label for="page">Page: </label><input class="single" type="text" name="page" value="" id="page" />
+      <label for="facets">Facets: </label><input class="comma" type="text" name="facets" value="" id="facets" />
+      <label for="filters">Filters: </label><input class="complex" type="text" name="filters" value="" id="filters" />
     </div>
     
-    <label for="includes">Includes : (comma delimited)</label><input type="text" name="includes" value="" id="includes" />
+    <label for="includes">Includes:</label>
+    <input class="comma" type="text" name="includes" value="" id="includes" />
     
-    <label for="excludes">Excludes : (comma delimited)</label><input type="text" name="excludes" value="" id="excludes" />
+    <label for="excludes">Excludes:</label>
+    <input class="comma" type="text" name="excludes" value="" id="excludes" />
     
-    <p><input type="submit" value="GET"></p>
+    <p><input id="submit" type="submit" value="GET"></p>
   </form>
 </div>
 
 <input type="text" name="output" placeholder="http://api.zappos.com/" value="" id="output" />
-
 <div id="request"></div>
-
+<ol id="recents"></ol>
 
 <!--Loading jquery via google.load-->
 <script src="http://www.google.com/jsapi"></script>

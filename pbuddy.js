@@ -2,8 +2,6 @@ $(document).ready(function(){
   api = new ApiUrl();
 });
 
-
-
 var ApiUrl = function(){
   var self = this;
   this.key = null;
@@ -27,7 +25,7 @@ var ApiUrl = function(){
       self.searchOn = true;
       
     } else {
-      $('#idLabel').text('id(s) : (comma delimited)');
+      $('#idLabel').text('id(s):');
       $('#searchTerm').attr('id', 'productId');
       $('#searchOptions').hide('fast');
       self.searchOn = false;
@@ -57,8 +55,7 @@ var ApiUrl = function(){
       self.includes + 
       self.excludes + 
       (searchOptions || '') +
-      self.key + 
-      '&callback=?';
+      self.key;
       
       $('#output').val(output);
       
@@ -67,7 +64,8 @@ var ApiUrl = function(){
         dataType: 'jsonp',
         success: function(data){
           var formattedData = JSON.stringify(data, null, " ");
-          $('#request').html('<pre>' + formattedData + '</pre>');
+          $('#request').html('<pre>' + formattedData + '</pre>').slideDown('slow');
+          $('#recents').prepend("<li><a target='_blank' href='" + output + "'>" + output + "</a></li>");
           }
       });
       
@@ -127,7 +125,35 @@ ApiUrl.prototype = {
   },
   checkFilters : function() {
     var val = $('#filters').val();
-    this.facets = val !== '' ? '&filters={' + this.splitCommas(val, ':[') + ']}' : '';
+    if (val !== '') {
+      var filters = val.split('/');
+      var filterSplit = [];
+      var comma = ',';
+      var comma2 = ',';
+      var len = filters.length;
+      for (var i = 0; i < len; i++) {
+        if (i == len - 1) {
+          comma = '';
+        }
+        var commaFilter = filters[i].split(',');
+        var len2 = commaFilter.length;
+        for (var c = 0; c < len2; c++) {
+          if (c == len2 - 1) {
+            comma2 = '';
+          }
+          if (c == 0) {
+            filterSplit.push('"', commaFilter[0], '":[');
+          } else {
+            filterSplit.push('"', commaFilter[c], '"' + comma2);
+          }
+        }
+        filterSplit.push(']' + comma);
+      }
+      
+      filterSplit.unshift('&filters={');
+      filterSplit.push('}');
+      this.filters = filterSplit.join('');
+    }
   }
 };
 
