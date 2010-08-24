@@ -28,3 +28,6 @@ input {width:200px; padding:3px; border:2px solid #999; -moz-border-radius:5px; 
 /* Form Key */
 #formKey {float:right; width:200px;}
 #formKey input {margin:3px 0 2px;}
+
+#footer {margin:0 0 10px; color:#333; text-shadow:#ccc 1px 1px 0px;}
+.meta {margin:0 0 10px; font-family:Georgia; font-style:italic;}
