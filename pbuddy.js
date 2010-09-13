@@ -1,11 +1,11 @@
 $(document).ready(function(){
-  api = new ApiUrl();
+  var api = new pb.ApiUrl();
 });
 
-var ApiUrl = function(){
+pb.ApiUrl = function(){
   var self = this;
   this.key = null;
-  this.controller = $('#controller').val();
+  this.controller = 'Product';
   this.ids = '';
   this.includes = '';
   this.excludes = '';
@@ -16,19 +16,26 @@ var ApiUrl = function(){
   this.filters = '';
   this.searchOn = false;
   
-  $('#controller').change(function(){
-    self.controller = $('#controller').val();
-    if (self.controller == 'Search') {
-      $('#idLabel').text('Search Term :');
-      $('#productId').attr('id', 'searchTerm');
-      $('#searchOptions').show('fast');
-      self.searchOn = true;
-      
-    } else {
-      $('#idLabel').text('id(s):');
-      $('#searchTerm').attr('id', 'productId');
-      $('#searchOptions').hide('fast');
-      self.searchOn = false;
+  $('#controllers').click(function(e){
+    e.preventDefault();
+    self.controller = $(e.target);
+    if (self.controller.attr('href')) {
+      if (self.controller.text() == 'Search') {
+        self.controller.parent().parent().find('.current').removeClass('current');
+        self.controller.parent().addClass('current');
+        $('#idLabel').text('Search Term :');
+        $('#productId').attr('id', 'searchTerm');
+        $('#searchOptions').show('fast');
+        self.searchOn = true;
+
+      } else {
+        self.controller.parent().parent().find('.current').removeClass('current');
+        self.controller.parent().addClass('current');
+        $('#idLabel').text('SKU(s):');
+        $('#searchTerm').attr('id', 'productId');
+        $('#searchOptions').hide('fast');
+        self.searchOn = false;
+      }
     }
   });
   
@@ -76,7 +83,7 @@ var ApiUrl = function(){
   
 };
 
-ApiUrl.prototype = {
+pb.ApiUrl.prototype = {
   // Product controller methods
   checkKey : function(){
     this.key = '';
@@ -157,7 +164,7 @@ ApiUrl.prototype = {
   }
 };
 
-ApiUrl.prototype.splitCommas = function(value, separator){
+pb.ApiUrl.prototype.splitCommas = function(value, separator){
   var spArray = value.split(',');
   var last = '"' + separator + '"';
   var spString = '"';
@@ -170,6 +177,12 @@ ApiUrl.prototype.splitCommas = function(value, separator){
   }
   spString += '"';
   return spString;
+};
+
+pb.ApiUrl.prototype.createInputs = function(controller, id, class, controllerObj) {
+  var dynamicOptions = $('#searchOptions'),
+      inputs = [];
+  
 };
 
 

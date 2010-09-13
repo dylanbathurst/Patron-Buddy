@@ -1,22 +1,28 @@
-@-webkit-keyframes slideIn {from {top:-200px;}to {top:0px;}}
 
+/* Global styles */
 * {margin:0; padding:0;}
-html {background:url('http://dev.zeta.zappos.com:8080/imgs/bg.20100524165743.png') repeat left top;}
+html {background:url('imgs/bg.png') repeat left top;}
 body {width:960px; margin:0 auto; font-family:Verdana,Arial,sans; font-size:14px;}
 a {color:#2C5987; text-decoration:none;}
-#input {float:left; width:100%; margin:20px 0 0;}
-#output {font-size:20px; padding:10px; width:936px;}
-#recents {margin:10px 0 10px 20px; font-size:12px;}
-#inputForm label {display:block; margin:8px 0 3px;}
+
+/* Controller UL */
+#controllers {overflow:hidden; width:100%; background:#8E9E35; color:#fff; text-align:center;}
+#controllers li {display:inline; float:left; margin:0 5px 0 0; list-style:none;}
+#controllers a {display:block; margin:5px 0 0; padding:10px 20px; font-size:12px; color:#fff;}
+#controllers a:hover {background:rgba(0,0,0,.3); -moz-border-radius:5px 5px 0 0; -webkit-border-radius:5px 5px 0 0;}
+#controllers .current a {background:url('imgs/bg.png') repeat left top; color:#333; -moz-border-radius:5px 5px 0 0; -webkit-border-radius:5px 5px 0 0;}
+#controllers li:first-child {font-size:13px; margin:15px 10px 0;}
+
+/* Main Heading & Patron Bottle Animation */
+@-webkit-keyframes slideIn {from {top:-200px;}to {top:0px;}}
 h1 {position:relative; margin:20px 0; padding:0 0 0 60px; -webkit-animation-name: slideIn; -webkit-animation-duration: 1s; -webkit-animation-iteration-count: 1; -webkit-animation-direction: alternate;}
 h1 img {position:absolute; left:0; top:-20px; width:50px; -webkit-transition: all .1s ease-in-out;}
 h1 img:hover {-webkit-transform: rotate(-30deg); -moz-transform: rotate(-30deg);}
+
+/* API Call Form Styles */
+#input {float:left; width:200px;}
+#inputForm label {display:block; margin:8px 0 3px;}
 #searchOptions {display:none;}
-
-#request {display:none; margin:10px 0; padding:10px; background:#fff; -moz-border-radius:5px; -webkit-border-radius:5px;}
-#request pre {font-family:Verdana;}
-
-/* Form Specific */
 input {width:200px; padding:3px; border:2px solid #999; -moz-border-radius:5px; -webkit-border-radius:5px;}
 .comma {border-color:#558ABE;}
 .single {border-color:#A4B344;}
@@ -26,8 +32,15 @@ input {width:200px; padding:3px; border:2px solid #999; -moz-border-radius:5px; 
 #submit {padding:5px; margin:8px 0; width:35px;}
 
 /* Form Key */
-#formKey {float:right; width:200px;}
-#formKey input {margin:3px 0 2px;}
+#formKey {margin:0 0 20px;}
+#formKey input {margin:0 0 5px;}
 
-#footer {margin:0 0 10px; color:#333; text-shadow:#ccc 1px 1px 0px;}
+/* API URL and JSON Object */
+#output {font-size:20px; padding:10px; margin:10px 0; width:936px;}
+#request {display:none; width:700px; float:right; margin:0 0 10px; padding:10px; background:#fff; -moz-border-radius:5px; -webkit-border-radius:5px;}
+#request pre {font-family:Verdana;}
+#recents {clear:both; margin:10px 0 10px 20px; font-size:12px;}
+
+/* Footer Styles */
+#footer {clear:both; margin:0 0 10px; padding:10px 0 0; color:#333; text-shadow:#ccc 1px 1px 1px; border-top:2px solid #999;}
 .meta {margin:0 0 10px; font-family:Georgia; font-style:italic;}
