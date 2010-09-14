@@ -7,12 +7,14 @@
 <body>
   
 <!-- Controller List -->
-<ul id="controllers">
-  <li>Controllers:</li>
-  <li class='current'><a href="/product">Product</a></li>
-  <li><a href="/product">Search</a></li>
-</ul>
-<h1><img src="imgs/patron.png" />Patron Buddy!!!</h1>
+<div id="navWrap">
+  <ul id="controllers">
+    <li>Controllers:</li>
+    <li class='current'><a href="/product">Product</a></li>
+    <li><a href="/product">Search</a></li>
+  </ul>
+</div>
+<h1><img src="imgs/patron.png" /><span>Patron Buddy!!!</span><span class="motto">API Development Helper for You!</span></h1>
 
 <!-- Displays URL For API call -->
 <input type="text" name="output" placeholder="http://api.zappos.com/" value="" id="output" />
@@ -32,24 +34,7 @@
   <form action="" method="get" id="inputForm">
     <p>API key: <a href="http://groups.google.com/group/zappos_api/browse_thread/thread/b7e9432b70e3f0e0" title="How to get an API Key">Need One?</a></p>
     <p><input class="single" type="text" name="apiKey" value="" id="apiKey" /></p>
-    
-    <label id="idLabel" for="productId">SKU(s):</label>
-    <input class="comma" type="text" name="productId" value="" id="productId" />
-    
-    <!-- Search Controller Only Options -->
-    <div id="searchOptions">
-      <label for="sort">Sorting: </label><input class="comma" type="text" name="sort" value="" id="sort" />
-      <label for="limit">Limit: </label><input class="single" type="text" name="limit" value="" id="limit" />
-      <label for="page">Page: </label><input class="single" type="text" name="page" value="" id="page" />
-      <label for="facets">Facets: </label><input class="comma" type="text" name="facets" value="" id="facets" />
-      <label for="filters">Filters: </label><input class="complex" type="text" name="filters" value="" id="filters" />
-    </div>
-    
-    <label for="includes">Includes:</label>
-    <input class="comma" type="text" name="includes" value="" id="includes" />
-    
-    <label for="excludes">Excludes:</label>
-    <input class="comma" type="text" name="excludes" value="" id="excludes" />
+    <div id="optionsHook"></div>
     
     <p><input id="submit" type="submit" value="GET"></p>
   </form>
@@ -69,10 +54,7 @@
   <p>Feel free to <a href="http://github.com/dylanbathurst/Patron-Buddy">Fork Patron Buddy</a> on Github or <a href="mailto:dylanbathurst@gmail.com">make suggestions</a> for improvements</p>
 </div>
 <!--Loading jquery via google.load-->
-<script src="http://www.google.com/jsapi"></script>
-<script type="text/javascript" charset="utf-8">
-google.load("jquery", "1.4.2");
-</script>
+<script src="js/jquery-1.4.2.js"></script>
 <!--end google.load-->
 <script src="controllers/product.js"></script>
 <script src="controllers/search.js"></script>

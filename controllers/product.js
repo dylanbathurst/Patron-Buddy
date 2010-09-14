@@ -1,15 +1,15 @@
 var pb = {};
 // product controller specific code here
-pb.product = {
-  'productRequestInput': [
-                          {'id':'array'},
+pb.Product = {
+  requestInput: [
+                          {id:'array'},
                           {
-                            'includes': 'array',
-                            'values': ['styles', 'color']
+                            includes: 'array',
+                            values: ['styles', 'color']
                           },
                           {
-                            'excludes': 'array',
-                            'values': ['styles', 'color']
+                            excludes: 'array',
+                            values: ['styles', 'color', 'size']
                           }
                          ]
 };

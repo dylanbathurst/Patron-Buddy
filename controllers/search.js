@@ -1,28 +1,28 @@
 // search controller specific code here
-pb.search = {
-  'searchRequestInput': [
-                          {'term': 'string'}, 
+pb.Search = {
+  requestInput: [
+                          {term: 'string'}, 
                           {
-                            'sort': 'object',
-                            'values': ['newest', 'price', 'popular']
+                            sort: 'array',
+                            values: ['newest', 'price', 'popular']
                           }, 
-                          {'limit': 'integer'},
-                          {'page': 'integer'},
+                          {limit: 'integer'},
+                          {page: 'integer'},
                           {
-                            'facets': 'array',
-                            'values': ['productType', 'size', 'width']
+                            facets: 'array',
+                            values: ['productType', 'size', 'width']
                           },
                           {
-                            'filters': 'object',
-                            'values': ['productType', 'size', 'width']
+                            filters: 'object',
+                            values: ['productType', 'size', 'width']
                           },
                           {
-                            'includes': 'array',
-                            'values': ['styles', 'color']
+                            includes: 'array',
+                            values: ['styles', 'color']
                           },
                           {
-                            'excludes': 'array',
-                            'values': ['styles', 'color']
+                            excludes: 'array',
+                            values: ['styles', 'color']
                           }
                         ]
 };

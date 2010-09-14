@@ -2,25 +2,28 @@
 /* Global styles */
 * {margin:0; padding:0;}
 html {background:url('imgs/bg.png') repeat left top;}
-body {width:960px; margin:0 auto; font-family:Verdana,Arial,sans; font-size:14px;}
+body {width:960px; margin:0 auto; padding:60px 0 0; font-family:Verdana,Arial,sans; font-size:14px;}
 a {color:#2C5987; text-decoration:none;}
 
 /* Controller UL */
-#controllers {overflow:hidden; width:100%; background:#8E9E35; color:#fff; text-align:center;}
+#navWrap {position:absolute; left:0; top:0; width:100%; background:#8E9E35;}
+#controllers {overflow:hidden; width:960px; margin:0 auto; color:#fff; text-align:center;}
 #controllers li {display:inline; float:left; margin:0 5px 0 0; list-style:none;}
-#controllers a {display:block; margin:5px 0 0; padding:10px 20px; font-size:12px; color:#fff;}
+#controllers a {display:block; margin:7px 0 0; padding:10px 20px; font-size:12px; color:#fff;}
 #controllers a:hover {background:rgba(0,0,0,.3); -moz-border-radius:5px 5px 0 0; -webkit-border-radius:5px 5px 0 0;}
 #controllers .current a {background:url('imgs/bg.png') repeat left top; color:#333; -moz-border-radius:5px 5px 0 0; -webkit-border-radius:5px 5px 0 0;}
 #controllers li:first-child {font-size:13px; margin:15px 10px 0;}
 
 /* Main Heading & Patron Bottle Animation */
 @-webkit-keyframes slideIn {from {top:-200px;}to {top:0px;}}
-h1 {position:relative; margin:20px 0; padding:0 0 0 60px; -webkit-animation-name: slideIn; -webkit-animation-duration: 1s; -webkit-animation-iteration-count: 1; -webkit-animation-direction: alternate;}
-h1 img {position:absolute; left:0; top:-20px; width:50px; -webkit-transition: all .1s ease-in-out;}
-h1 img:hover {-webkit-transform: rotate(-30deg); -moz-transform: rotate(-30deg);}
+h1 {position:relative; height:100px; margin:20px 0; padding:0 0 0 200px; -webkit-animation-name: slideIn; -webkit-animation-duration: 1s; -webkit-animation-iteration-count: 1; -webkit-animation-direction: alternate;}
+h1 img {position:absolute; left:0; top:-20px; width:189px; -webkit-transition: all .1s ease-in-out;}
+h1 img:hover {-webkit-transform: rotate(40deg); -moz-transform: rotate(40deg);}
+h1 span {display:block; padding:8px 0 0; font:normal normal normal 50px Verdana, sans-serif;}
+h1 .motto {padding:0; font:normal 13px 'Trebuchet MS', sans-serif; font-weight:700; text-transform:uppercase; color:#E14601;}
 
 /* API Call Form Styles */
-#input {float:left; width:200px;}
+#input {float:left; width:220px;}
 #inputForm label {display:block; margin:8px 0 3px;}
 #searchOptions {display:none;}
 input {width:200px; padding:3px; border:2px solid #999; -moz-border-radius:5px; -webkit-border-radius:5px;}

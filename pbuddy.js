@@ -6,132 +6,99 @@ pb.ApiUrl = function(){
   var self = this;
   this.key = null;
   this.controller = 'Product';
-  this.ids = '';
-  this.includes = '';
-  this.excludes = '';
-  this.sort = '';
-  this.limit = '';
-  this.page = '';
-  this.facets = '';
-  this.filters = '';
-  this.searchOn = false;
   
+  this.createInputs(pb[this.controller]);
+
   $('#controllers').click(function(e){
     e.preventDefault();
-    self.controller = $(e.target);
-    if (self.controller.attr('href')) {
-      if (self.controller.text() == 'Search') {
-        self.controller.parent().parent().find('.current').removeClass('current');
-        self.controller.parent().addClass('current');
-        $('#idLabel').text('Search Term :');
-        $('#productId').attr('id', 'searchTerm');
-        $('#searchOptions').show('fast');
-        self.searchOn = true;
-
-      } else {
-        self.controller.parent().parent().find('.current').removeClass('current');
-        self.controller.parent().addClass('current');
-        $('#idLabel').text('SKU(s):');
-        $('#searchTerm').attr('id', 'productId');
-        $('#searchOptions').hide('fast');
-        self.searchOn = false;
-      }
+    if (e.target.href) {
+      var target = e.target.innerHTML;
+      self.controller = target;
+      $(this).find('.current').removeClass('current');
+      $(e.target).parent().addClass('current');
+      self.createInputs(pb[target]);
     }
   });
-  
+   
   $('#inputForm').submit(function(e){
     e.preventDefault();
-    self.checkKey();
-    if (self.key) {
-      self.checkIds();
-      self.checkIncludes();
-      self.checkExcludes();
-      
-      self.checkSort();
-      self.checkLimit();
-      self.checkPage();
-      self.checkFacets();
-      self.checkFilters();
-      
-      if (self.searchOn) {
-        var searchOptions = self.sort + self.limit + self.page + self.facets + self.filters;
-      }
-      var output = 'http://api.zappos.com/' + 
-      self.controller + 
-      self.ids + 
-      self.includes + 
-      self.excludes + 
-      (searchOptions || '') +
-      self.key;
-      
-      $('#output').val(output);
-      
-      $.ajax({
-        url: output,
-        dataType: 'jsonp',
-        success: function(data){
-          var formattedData = JSON.stringify(data, null, " ");
-          $('#request').html('<pre>' + formattedData + '</pre>').slideDown('slow');
-          $('#recents').prepend("<li><a target='_blank' href='" + output + "'>" + output + "</a></li>");
-          }
-      });
-      
+    var formSet = $(this).find('input'),
+        output = ['http://api.zappos.com/', self.controller],
+        outputStr = '';
+        len = formSet.length;
+    
+    if (formSet.eq(0).val() !== '') {
+      self.checkKey(formSet.eq(0).val());
     } else {
       alert('Wow, hold on! You forgot your API key.');
+      return;
     }
+    
+    for (var i = 1; i <= len-2; i++) {
+      var id = formSet.eq(i).attr('id');
+      output.push(self['check' + id]('#' + id));
+    }
+    output.push(self.key);
+    outputStr = output.join('');
+    $('#output').val(outputStr);
+    
+    $.ajax({
+      url: outputStr,
+      dataType: 'jsonp',
+      success: function(data){
+        var formattedData = JSON.stringify(data, null, " ");
+        $('#request').html('<pre>' + formattedData + '</pre>').slideDown('slow');
+        $('#recents').prepend("<li><a target='_blank' href='" + outputStr + "'>" + outputStr + "</a></li>");
+        }
+    });
   });
   
 };
 
 pb.ApiUrl.prototype = {
   // Product controller methods
-  checkKey : function(){
-    this.key = '';
-    this.key = '&key=' + $('#apiKey').val();
+  checkKey : function(key){
+    this.key = '&key=' + key;
   },
-  checkIds : function() {
-    if ($('#productId').val()) {
-      this.ids = '?id=[' + this.splitCommas($('#productId').val(), ',') + ']';
+  checkZid : function(id) {
+    if ($(id).val()) {
+      return '?id=[' + this.splitCommas($(id).val(), ',') + ']';
     } else {
       this.checkTerm();
     }
   },
-  checkIncludes : function(){
-    if ($('#includes').val()) {
-      this.includes = '&includes=[' + this.splitCommas($('#includes').val(), ',') + ']';
-    } else {
-      this.includes = '';
+  checkZincludes : function(id){
+    if ($(id).val()) {
+      return '&includes=[' + this.splitCommas($(id).val(), ',') + ']';
     }
   },
-  checkExcludes : function(){
-    if ($('#excludes').val()) {
-      this.excludes = '&excludes=[' + this.splitCommas($('#excludes').val(), ',') + ']';
-    } else {
-      this.excludes = '';
+  checkZexcludes : function(id){
+    if ($(id).val()) {
+      return '&excludes=[' + this.splitCommas($(id).val(), ',') + ']';
     }
   },
   // Search controller methods
-  checkTerm : function() {
-    this.ids = '?term=' + $('#searchTerm').val();
+  checkZterm : function(id) {
+    return '?term=' + $(id).val();
   },
-  checkSort : function() {
-    var val = $('#sort').val();
-    this.sort = val !== '' ? '&sort={' + this.splitCommas(val, ':') + '}' : '';
+  checkZsort : function(id) {
+    var val = $(id).val();
+    return val !== '' ? '&sort={' + this.splitCommas(val, ':') + '}' : '';
   },
-  checkLimit : function() {
-    var val = $('#limit').val();
-    this.limit = val !== '' ? '&limit=' + val : '';
+  checkZlimit : function(id) {
+    var val = $(id).val();
+    return val !== '' ? '&limit=' + val : '';
   },
-  checkPage : function() {
-    var val = $('#page').val();
-    this.page = val !== '' ? '&page=' + val : '';
+  checkZpage : function(id) {
+    var val = $(id).val();
+    return val !== '' ? '&page=' + val : '';
   },
-  checkFacets : function() {
-    var val = $('#facets').val();
-    this.facets = val !== '' ? '&facets=[' + this.splitCommas(val, ',') + ']' : '';
+  checkZfacets : function(id) {
+    var val = $(id).val();
+    return val !== '' ? '&facets=[' + this.splitCommas(val, ',') + ']' : '';
   },
-  checkFilters : function() {
-    var val = $('#filters').val();
+  checkZfilters : function(id) {
+    var val = $(id).val();
     if (val !== '') {
       var filters = val.split('/');
       var filterSplit = [];
@@ -159,7 +126,7 @@ pb.ApiUrl.prototype = {
       
       filterSplit.unshift('&filters={');
       filterSplit.push('}');
-      this.filters = filterSplit.join('');
+      return filterSplit.join('');
     }
   }
 };
@@ -179,18 +146,38 @@ pb.ApiUrl.prototype.splitCommas = function(value, separator){
   return spString;
 };
 
-pb.ApiUrl.prototype.createInputs = function(controller, id, class, controllerObj) {
+pb.ApiUrl.prototype.createInputs = function(controllerObj) {
   var dynamicOptions = $('#searchOptions'),
-      inputs = [];
+      inputs = [],
+      data = controllerObj.requestInput,
+      len = controllerObj.requestInput.length;
   
+  for (var i = 0; i < len; i++) {
+    for (var key in data[i]) {
+      var value = data[i][key],
+          format = null;
+      
+      switch (value) {
+        case 'string':
+          format = 'single';
+          break;
+        case 'array':
+          format = 'comma';
+          break;
+        case 'object':
+          format = 'complex';
+          break;
+      }
+      
+      if (key !== 'values') {
+        inputs.push('<label for="Z', key, '">', key, ': </label><input type="text" class="', format, '" name="Z', key, '" value="" id="Z', key, '" />');
+      } else {
+        var size = value.length;
+        for (var e = 0; e < size; e++) {
+          // console.log(value[e]);
+        }
+      }
+    }
+  }
+  $('#optionsHook').hide().html(inputs.join('')).slideDown('fast');  
 };
-
-
-
-
-
-
-
-
-
-
