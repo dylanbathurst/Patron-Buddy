@@ -1,4 +1,7 @@
-// search controller specific code here
+// Search controller object that contains all 
+// the options and possible values for that 
+// controller. Hopefully this will be turned
+// into an ajax call to get this object.
 pb.Search = {
   requestInput: [
                           {term: 'string'}, 
@@ -27,6 +30,8 @@ pb.Search = {
                         ]
 };
 
+// Adds all Search controller methods to the
+// controllers object.
 pb.controllers.checkZterm = function(id) {
   return '?term=' + $(id).val();
 }
@@ -51,6 +56,9 @@ pb.controllers.checkZfacets = function(id) {
   return val !== '' ? '&facets=[' + pb.ApiUrl.splitCommas(val, ',') + ']' : '';
 }
 
+// Filters are a pain in the ass and so this 
+// monstrosity loops and doops and finally poops
+// out the set filters in a pretty manner.
 pb.controllers.checkZfilters = function(id) {
   var val = $(id).val();
   if (val !== '') {

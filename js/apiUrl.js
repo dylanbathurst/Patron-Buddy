@@ -1,9 +1,17 @@
+// A function for handling way too much stuff...
+// Such as Controller/Tab switching, form submition,
+// and the actual api call.
 pb.ApiUrl = function(){
   var self = this;
   this.controller = 'Product';
   
+  // Sets up the Product Controller Form by default
   this.createInputs(pb[this.controller]);
   
+  // This should not be here but while it is it just
+  // handles the tabs at the top of the site and the
+  // setting of this.controller and triggering the 
+  // createInputs method. Damn that's a lot of stuff!
   $('#controllers').click(function(e){
     e.preventDefault();
     if (e.target.href) {
@@ -15,6 +23,9 @@ pb.ApiUrl = function(){
     }
   });
    
+  // Does the necessary preprocessing to all the inputs
+  // in the form. Then it creates the api call url and 
+  // handles the ajax call and displaying the response
   $('#inputForm').submit(function(e){
     e.preventDefault();
     var formSet = $(this).find('input'),
@@ -33,6 +44,7 @@ pb.ApiUrl = function(){
       var id = formSet.eq(i).attr('id');
       output.push(pb.controllers['check' + id]('#' + id));
     }
+    
     output.push(pb.key);
     outputStr = output.join('');
     $('#output').val(outputStr);
@@ -40,10 +52,14 @@ pb.ApiUrl = function(){
     $.ajax({
       url: outputStr,
       dataType: 'jsonp',
+      // error is not working with zappos api 404s for some reason. hurm...
       error: function(request, error) {
         console.log(error);
       },
       success: function(data){
+        // this is where the response object is displayed
+        // for the user. I want to add syntax highlighting
+        // and here is where that will be implemented.
         var formattedData = JSON.stringify(data, null, " ");
         $('#request').html('<pre><code>' + formattedData + '</code></pre>').slideDown('slow');
         $('#recents').prepend("<li><a target='_blank' href='" + outputStr + "'>" + outputStr + "</a></li>");
@@ -97,10 +113,12 @@ pb.ApiUrl.prototype.createInputs = function(controllerObj) {
       if (key !== 'values') {
         inputs.push('<label for="Z', key, '">', key, ': </label><input type="text" class="', format, '" name="Z', key, '" value="" id="Z', key, '" />');
       } else {
-        var size = value.length;
-        for (var e = 0; e < size; e++) {
-          // console.log(value[e]);
-        }
+        // This area is for displaying the possible
+        // values that are available for each input
+        // var size = value.length;
+        //  for (var e = 0; e < size; e++) {
+        //   console.log(value[e]);
+        // }
       }
     }
   }

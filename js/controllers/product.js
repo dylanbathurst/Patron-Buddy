@@ -15,6 +15,7 @@ pb.Product = {
                          ]
 };
 
+// Product controller method
 pb.controllers.checkZid = function(id) {
   if ($(id).val()) {
     return '?id=[' + pb.splitCommas($(id).val(), ',') + ']';
