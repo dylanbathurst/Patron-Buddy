@@ -1,14 +1,9 @@
-$(document).ready(function(){
-  var api = new pb.ApiUrl();
-});
-
 pb.ApiUrl = function(){
   var self = this;
-  this.key = null;
   this.controller = 'Product';
   
   this.createInputs(pb[this.controller]);
-
+  
   $('#controllers').click(function(e){
     e.preventDefault();
     if (e.target.href) {
@@ -28,7 +23,7 @@ pb.ApiUrl = function(){
         len = formSet.length;
     
     if (formSet.eq(0).val() !== '') {
-      self.checkKey(formSet.eq(0).val());
+      pb.controllers.setKey(formSet.eq(0).val());
     } else {
       alert('Wow, hold on! You forgot your API key.');
       return;
@@ -36,18 +31,21 @@ pb.ApiUrl = function(){
     
     for (var i = 1; i <= len-2; i++) {
       var id = formSet.eq(i).attr('id');
-      output.push(self['check' + id]('#' + id));
+      output.push(pb.controllers['check' + id]('#' + id));
     }
-    output.push(self.key);
+    output.push(pb.key);
     outputStr = output.join('');
     $('#output').val(outputStr);
     
     $.ajax({
       url: outputStr,
       dataType: 'jsonp',
+      error: function(request, error) {
+        console.log(error);
+      },
       success: function(data){
         var formattedData = JSON.stringify(data, null, " ");
-        $('#request').html('<pre>' + formattedData + '</pre>').slideDown('slow');
+        $('#request').html('<pre><code>' + formattedData + '</code></pre>').slideDown('slow');
         $('#recents').prepend("<li><a target='_blank' href='" + outputStr + "'>" + outputStr + "</a></li>");
         }
     });
@@ -55,83 +53,8 @@ pb.ApiUrl = function(){
   
 };
 
-pb.ApiUrl.prototype = {
-  // Product controller methods
-  checkKey : function(key){
-    this.key = '&key=' + key;
-  },
-  checkZid : function(id) {
-    if ($(id).val()) {
-      return '?id=[' + this.splitCommas($(id).val(), ',') + ']';
-    } else {
-      this.checkTerm();
-    }
-  },
-  checkZincludes : function(id){
-    if ($(id).val()) {
-      return '&includes=[' + this.splitCommas($(id).val(), ',') + ']';
-    }
-  },
-  checkZexcludes : function(id){
-    if ($(id).val()) {
-      return '&excludes=[' + this.splitCommas($(id).val(), ',') + ']';
-    }
-  },
-  // Search controller methods
-  checkZterm : function(id) {
-    return '?term=' + $(id).val();
-  },
-  checkZsort : function(id) {
-    var val = $(id).val();
-    return val !== '' ? '&sort={' + this.splitCommas(val, ':') + '}' : '';
-  },
-  checkZlimit : function(id) {
-    var val = $(id).val();
-    return val !== '' ? '&limit=' + val : '';
-  },
-  checkZpage : function(id) {
-    var val = $(id).val();
-    return val !== '' ? '&page=' + val : '';
-  },
-  checkZfacets : function(id) {
-    var val = $(id).val();
-    return val !== '' ? '&facets=[' + this.splitCommas(val, ',') + ']' : '';
-  },
-  checkZfilters : function(id) {
-    var val = $(id).val();
-    if (val !== '') {
-      var filters = val.split('/');
-      var filterSplit = [];
-      var comma = ',';
-      var comma2 = ',';
-      var len = filters.length;
-      for (var i = 0; i < len; i++) {
-        if (i == len - 1) {
-          comma = '';
-        }
-        var commaFilter = filters[i].split(',');
-        var len2 = commaFilter.length;
-        for (var c = 0; c < len2; c++) {
-          if (c == len2 - 1) {
-            comma2 = '';
-          }
-          if (c == 0) {
-            filterSplit.push('"', commaFilter[0], '":[');
-          } else {
-            filterSplit.push('"', commaFilter[c], '"' + comma2);
-          }
-        }
-        filterSplit.push(']' + comma);
-      }
-      
-      filterSplit.unshift('&filters={');
-      filterSplit.push('}');
-      return filterSplit.join('');
-    }
-  }
-};
-
-pb.ApiUrl.prototype.splitCommas = function(value, separator){
+// Helper function to take form comma delimited values and split them out
+pb.splitCommas = function(value, separator){
   var spArray = value.split(',');
   var last = '"' + separator + '"';
   var spString = '"';
@@ -146,6 +69,8 @@ pb.ApiUrl.prototype.splitCommas = function(value, separator){
   return spString;
 };
 
+// Helper function that takes the controller object as an argument and creates
+// form inputs and inserts them into the DOM
 pb.ApiUrl.prototype.createInputs = function(controllerObj) {
   var dynamicOptions = $('#searchOptions'),
       inputs = [],

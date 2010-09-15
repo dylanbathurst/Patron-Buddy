@@ -1,5 +1,6 @@
-var pb = {};
 // product controller specific code here
+// Eventually I want to make an ajax call to get these
+// values, but the functionality currently doesn't exist.
 pb.Product = {
   requestInput: [
                           {id:'array'},
@@ -13,3 +14,9 @@ pb.Product = {
                           }
                          ]
 };
+
+pb.controllers.checkZid = function(id) {
+  if ($(id).val()) {
+    return '?id=[' + pb.splitCommas($(id).val(), ',') + ']';
+  }
+}
