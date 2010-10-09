@@ -22,7 +22,14 @@ pb.ApiUrl = function(){
       self.createInputs(pb[target]);
     }
   });
-   
+  
+  $('#inputForm').change(function(e) {
+    var target = $(e.target);
+    var value = target.val();
+    var input = target.prev('input');
+    input.val(input.val() + value + ',');
+  });
+
   // Does the necessary preprocessing to all the inputs
   // in the form. Then it creates the api call url and 
   // handles the ajax call and displaying the response
@@ -54,7 +61,7 @@ pb.ApiUrl = function(){
       dataType: 'jsonp',
       // error is not working with zappos api 404s for some reason. hurm...
       error: function(request, error) {
-        console.log(error);
+        console.log('shiiaaattt');
       },
       success: function(data){
         // this is where the response object is displayed
@@ -71,6 +78,10 @@ pb.ApiUrl = function(){
 
 // Helper function to take form comma delimited values and split them out
 pb.splitCommas = function(value, separator){
+  var lastComma = value.length;
+  if (value[value.length - 1] == ',') {
+    value = value.substr(0,value.length - 1); 
+  }
   var spArray = value.split(',');
   var last = '"' + separator + '"';
   var spString = '"';
@@ -111,14 +122,17 @@ pb.ApiUrl.prototype.createInputs = function(controllerObj) {
       }
       
       if (key !== 'values') {
-        inputs.push('<label for="Z', key, '">', key, ': </label><input type="text" class="', format, '" name="Z', key, '" value="" id="Z', key, '" />');
+        inputs.push('<label for="Z', key, '">', key, ': </label><input tabindex="', i + 1, '" type="text" class="', format, '" name="Z', key, '" value="" id="Z', key, '" />');
       } else {
         // This area is for displaying the possible
         // values that are available for each input
-        // var size = value.length;
-        //  for (var e = 0; e < size; e++) {
-        //   console.log(value[e]);
-        // }
+        var buffer = ['<select tabindex="', i + 1, '"><option value="">Values</option>'];
+        var size = value.length;
+         for (var e = 0; e < size; e++) {
+          buffer.push('<option value="', value[e], '">', value[e], '</option>');
+        }
+        buffer.push('</select>');
+        inputs.push(buffer.join(''));
       }
     }
   }

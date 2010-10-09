@@ -6,11 +6,12 @@ pb.Product = {
                           {id:'array'},
                           {
                             includes: 'array',
-                            values: ['styles', 'color']
+                            values: ['productId', 'brandName','brandId','productName','defaultProductUrl','defaultImageUrl','rootProductType','productType','description','gender','weight','videoFileName','videoUrl','videoUploadedDate','sizeFit','widthFit','archFit','productRating','styles','styleId','styleId','color','originalPrice','price','productUrl','imageUrl','thumbnailImageUrl','goLiveDate','productId','stocks','stockId','size','width','onHand','sizeId','widthId','sortedSizes','sortedWidths','isNew']
                           },
+                          
                           {
                             excludes: 'array',
-                            values: ['styles', 'color', 'size']
+                            values: ['productId', 'brandName','brandId','productName','defaultProductUrl','defaultImageUrl','rootProductType','productType','description','gender','weight','videoFileName','videoUrl','videoUploadedDate','sizeFit','widthFit','archFit','productRating','styles','styleId','styleId','color','originalPrice','price','productUrl','imageUrl','thumbnailImageUrl','goLiveDate','productId','stocks','stockId','size','width','onHand','sizeId','widthId','sortedSizes','sortedWidths','isNew']
                           }
                          ]
 };

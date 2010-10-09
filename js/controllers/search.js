@@ -7,25 +7,25 @@ pb.Search = {
                           {term: 'string'}, 
                           {
                             sort: 'array',
-                            values: ['newest', 'price', 'popular']
+                            values: ['price,asc', 'price,desc', 'goLiveDate,asc', 'goLiveDate,desc', 'productPopularity,asc', 'productPopularity,desc', 'recentSales,asc', 'recentSales,desc', 'brandNameFacet,asc', 'brandNameFacet,desc']
                           }, 
                           {limit: 'integer'},
                           {page: 'integer'},
                           {
                             facets: 'array',
-                            values: ['productType', 'size', 'width']
+                            values: ['productTypeFacet', 'size', 'width','color','price','brand']
                           },
                           {
                             filters: 'object',
-                            values: ['productType', 'size', 'width']
+                            values: ['productTypeFacet', 'size', 'width','color','price','brand']
                           },
                           {
                             includes: 'array',
-                            values: ['styles', 'color']
+                            values: ['styleId', 'productId', 'colorId', 'brandName', 'productName', 'productUrl', 'thumbnailImageUrl', 'price', 'originalPrice', 'description', 'videoUrl', 'videoFileName', 'videoUploadedDate', 'productRating', 'currentResultCount', 'totalResultCount', 'limit', 'currentPage', 'pageCount', 'filters', 'facets', 'facetField', 'facetFieldDisplayName', 'values', 'name', 'count']
                           },
                           {
                             excludes: 'array',
-                            values: ['styles', 'color']
+                            values: ['styleId', 'productId', 'colorId', 'brandName', 'productName', 'productUrl', 'thumbnailImageUrl', 'price', 'originalPrice', 'description', 'videoUrl', 'videoFileName', 'videoUploadedDate', 'productRating', 'currentResultCount', 'totalResultCount', 'limit', 'currentPage', 'pageCount', 'filters', 'facets', 'facetField', 'facetFieldDisplayName', 'values', 'name', 'count']
                           }
                         ]
 };
@@ -37,8 +37,9 @@ pb.controllers.checkZterm = function(id) {
 }
 
 pb.controllers.checkZsort = function(id) {
+  console.log(id);
   var val = $(id).val();
-  return val !== '' ? '&sort={' + pb.ApiUrl.splitCommas(val, ':') + '}' : '';
+  return val !== '' ? '&sort={' + pb.splitCommas(val, ':') + '}' : '';
 }
 
 pb.controllers.checkZlimit = function(id) {
@@ -53,7 +54,7 @@ pb.controllers.checkZpage = function(id) {
 
 pb.controllers.checkZfacets = function(id) {
   var val = $(id).val();
-  return val !== '' ? '&facets=[' + pb.ApiUrl.splitCommas(val, ',') + ']' : '';
+  return val !== '' ? '&facets=[' + pb.splitCommas(val, ',') + ']' : '';
 }
 
 // Filters are a pain in the ass and so this 

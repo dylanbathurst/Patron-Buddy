@@ -10,8 +10,8 @@
 <div id="navWrap">
   <ul id="controllers">
     <li>Controllers:</li>
-    <li class='current'><a href="/product">Product</a></li>
-    <li><a href="/product">Search</a></li>
+    <li class='current'><a href="/product" id="cProduct">Product</a></li>
+    <li><a href="/product" id="cSearch">Search</a></li>
   </ul>
 </div>
 <h1><img src="imgs/patron.png" /><span>Patron Buddy!!!</span><span class="motto">API Development Helper for You!</span></h1>
@@ -33,7 +33,7 @@
   <!-- API request form -->
   <form action="" method="get" id="inputForm">
     <p>API key: <a href="http://groups.google.com/group/zappos_api/browse_thread/thread/b7e9432b70e3f0e0" title="How to get an API Key">Need One?</a></p>
-    <p><input class="single" type="text" name="apiKey" value="" id="apiKey" /></p>
+    <p><input class="single" type="text" name="apiKey" value="" id="apiKey" tabindex="1" /></p>
     <div id="optionsHook"></div>
     
     <p><input id="submit" type="submit" value="GET"></p>
