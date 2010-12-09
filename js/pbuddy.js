@@ -27,6 +27,9 @@ function setupKeyboardShortcuts() {
         case 115: // s
           $('#cSearch').click(); 
           break;
+        case 105: // i
+          $('#cImage').click(); 
+          break;
       }
     } 
   });

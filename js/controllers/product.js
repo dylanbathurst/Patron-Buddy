@@ -11,7 +11,7 @@ pb.Product = {
                           
                           {
                             excludes: 'array',
-                            values: ['productId', 'brandName','brandId','productName','defaultProductUrl','defaultImageUrl','rootProductType','productType','description','gender','weight','videoFileName','videoUrl','videoUploadedDate','sizeFit','widthFit','archFit','productRating','styles','styleId','styleId','color','originalPrice','price','productUrl','imageUrl','thumbnailImageUrl','goLiveDate','productId','stocks','stockId','size','width','onHand','sizeId','widthId','sortedSizes','sortedWidths','isNew']
+                            values: ['productId', 'brandName','brandId','productName','defaultProductUrl','defaultImageUrl','rootProductType','productType','description','gender','weight','videoFileName','videoUrl','videoUploadedDate','sizeFit','widthFit','archFit','productRating','-styles','-styleId','-styleId','-color','-originalPrice','-price','-productUrl','-imageUrl','-thumbnailImageUrl','-goLiveDate','-productId','--stocks','--stockId','--size','--width','--onHand','--sizeId','--widthId','sortedSizes','sortedWidths','isNew']
                           }
                          ]
 };
