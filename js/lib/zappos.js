@@ -20,11 +20,11 @@ var Zappos = {
     Zappos._createAPICall('Search', params, 'GET', args.callback);
   },
 
-  product : function (args) {
+  product : function (args, callback) {
     var params = args.options || {};
-    params.id = args.id.toString();
+    //params.id = args.id.toString();
     
-    Zappos._createAPICall('Product', params, 'GET', args.callback);
+    Zappos._createAPICall('Product', params, 'GET', callback);
   },
   
   style : function (args) {

@@ -37,7 +37,6 @@ pb.controllers.checkZterm = function(id) {
 }
 
 pb.controllers.checkZsort = function(id) {
-  console.log(id);
   var val = $(id).val();
   return val !== '' ? '&sort={' + pb.splitCommas(val, ':') + '}' : '';
 }

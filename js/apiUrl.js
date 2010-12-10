@@ -4,7 +4,7 @@
 pb.ApiUrl = function(){
   var self = this;
   this.controller = 'Product';
-  
+
   // Sets up the Product Controller Form by default
   this.createInputs(pb[this.controller]);
   
@@ -41,6 +41,7 @@ pb.ApiUrl = function(){
         len = formSet.length;
     
     if (formSet.eq(0).val() !== '') {
+      zappos.key = formSet.eq(0).val();
       pb.controllers.setKey(formSet.eq(0).val());
     } else {
       alert('Wow, hold on! You forgot your API key.');
