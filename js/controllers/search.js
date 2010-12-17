@@ -27,7 +27,11 @@ pb.Search = {
                             excludes: 'array',
                             values: ['styleId', 'productId', 'colorId', 'brandName', 'productName', 'productUrl', 'thumbnailImageUrl', 'price', 'originalPrice', 'description', 'videoUrl', 'videoFileName', 'videoUploadedDate', 'productRating', 'currentResultCount', 'totalResultCount', 'limit', 'currentPage', 'pageCount', 'filters', 'facets', 'facetField', 'facetFieldDisplayName', 'values', 'name', 'count']
                           }
-                        ]
+                        ],
+
+  formHandler : function() {
+  
+  }
 };
 
 // Adds all Search controller methods to the

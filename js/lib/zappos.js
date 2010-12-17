@@ -20,11 +20,11 @@ var Zappos = {
     Zappos._createAPICall('Search', params, 'GET', args.callback);
   },
 
-  product : function (args, callback) {
+  product : function (args) {
     var params = args.options || {};
     //params.id = args.id.toString();
     
-    Zappos._createAPICall('Product', params, 'GET', callback);
+    Zappos._createAPICall('Product', params, 'GET', args.callback);
   },
   
   style : function (args) {
@@ -84,7 +84,7 @@ var Zappos = {
   coreValues : function (id, callback) {
     switch (id) {
       case 'random' :
-        Zappos._createAPICall('CoreValue/random', {}, 'GET', callback);
+
         break;
       // If `id` is a Number or a String that !== 'random', then we make a call
       // for a single CoreValue.
@@ -139,6 +139,10 @@ var Zappos = {
     };
     
     url = url + '&callback=' + jsonp;
+
+    // NASTY HACK - TODO: find a way to fix this...
+    $('#output').val(url);
+
     script.setAttribute('src', url);
     head.appendChild(script);
   },

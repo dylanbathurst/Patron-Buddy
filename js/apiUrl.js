@@ -1,80 +1,33 @@
 // A function for handling way too much stuff...
 // Such as Controller/Tab switching, form submition,
 // and the actual api call.
-pb.ApiUrl = function(){
+pb.ApiUrl = function(controller){
   var self = this;
-  this.controller = 'Product';
+  this.form = $('#inputForm');
+  this.controller = controller;
 
   // Sets up the Product Controller Form by default
-  this.createInputs(pb[this.controller]);
+  self.createInputs(pb[this.controller]);
   
-  // This should not be here but while it is it just
-  // handles the tabs at the top of the site and the
-  // setting of this.controller and triggering the 
-  // createInputs method. Damn that's a lot of stuff!
-  $('#controllers').click(function(e){
-    e.preventDefault();
-    if (e.target.href) {
-      var target = e.target.innerHTML;
-      self.controller = target;
-      $(this).find('.current').removeClass('current');
-      $(e.target).parent().addClass('current');
-      self.createInputs(pb[target]);
-    }
-  });
-  
-  $('#inputForm').change(function(e) {
-    var target = $(e.target);
-    var value = target.val();
-    var input = target.prev('input');
-    input.val(input.val() + value + ',');
-  });
-
   // Does the necessary preprocessing to all the inputs
   // in the form. Then it creates the api call url and 
   // handles the ajax call and displaying the response
-  $('#inputForm').submit(function(e){
+  this.form.submit(function(e){
     e.preventDefault();
-    var formSet = $(this).find('input'),
-        output = ['http://api.zappos.com/', self.controller],
-        outputStr = '';
-        len = formSet.length;
+    $('#request').slideUp('fast');
+    var serial = self.form.serialize().split('&');
     
-    if (formSet.eq(0).val() !== '') {
-      zappos.key = formSet.eq(0).val();
-      pb.controllers.setKey(formSet.eq(0).val());
-    } else {
-      alert('Wow, hold on! You forgot your API key.');
-      return;
-    }
-    
-    for (var i = 1; i <= len-2; i++) {
-      var id = formSet.eq(i).attr('id');
-      output.push(pb.controllers['check' + id]('#' + id));
-    }
-    
-    output.push(pb.key);
-    outputStr = output.join('');
-    $('#output').val(outputStr);
-    
-    $.ajax({
-      url: outputStr,
-      dataType: 'jsonp',
-      // error is not working with zappos api 404s for some reason. hurm...
-      error: function(request, error) {
-        console.log('shiiaaattt');
-      },
-      success: function(data){
-        // this is where the response object is displayed
-        // for the user. I want to add syntax highlighting
-        // and here is where that will be implemented.
-        var formattedData = JSON.stringify(data, null, " ");
-        $('#request').html('<pre><code>' + formattedData + '</code></pre>').slideDown('slow');
-        $('#recents').prepend("<li><a target='_blank' href='" + outputStr + "'>" + outputStr + "</a></li>");
-        }
-    });
+    var formObject = pb[self.controller].formHandler(serial);
+
+    zappos.key = formObject.apiKey;
+    // Make PatronJS Product call
+    formObject.callback = function (res) {
+        var formattedData = JSON.stringify(res, null, " ");
+        $('#request').html('<pre><code>' + formattedData + '</code></pre>').slideDown('fast');
+    };
+
+    zappos[self.controller.toLowerCase()](formObject);
   });
-  
 };
 
 // Helper function to take form comma delimited values and split them out

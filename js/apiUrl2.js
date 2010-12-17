@@ -15,7 +15,6 @@ pb.setupFormSubmission.prototype = {
           formValues = {};
       formValues.options = {};
 
-
       // Loop through form values and put them 
       // in an object to pass to PatronJS
       for (var i = 0; i < len; i++) {
@@ -38,8 +37,9 @@ pb.setupFormSubmission.prototype = {
       zappos.key = formValues.apiKey;
 
       // Make PatronJS Product call
-      zappos.product(formValues, function (res) {
+      zappos.product({formValues, function (res) {
         //console.log(res);
+      }
       });
     });
   },

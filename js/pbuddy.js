@@ -1,7 +1,5 @@
 (function () {
   $(document).ready(function(){
-    var api = new pb.ApiUrl();
-    var api2 = new pb.setupFormSubmission('Product');
     setupKeyboardShortcuts();
     setupControllerSwitching();
   });
@@ -12,15 +10,21 @@
   function setupKeyboardShortcuts() {
     var bodyFocus = true;
 
-    // we don't want the form switing when the
+    // we don't want the form switching when the
     // user types the shortcuts into the form!
     $('#inputForm')
-    .focusin(function(){
-      bodyFocus = false; 
-    })
-    .focusout(function(){
-      bodyFocus = true;
-    });
+      .focusin(function(){
+        bodyFocus = false; 
+      })
+      .focusout(function(){
+        bodyFocus = true;
+      })
+      .change(function(e) {
+        var target = $(e.target);
+        var value = target.val();
+        var input = target.prev('input');
+        input.val(input.val() + value + ',');
+      });
 
     $('body').keypress(function(e){
       if (bodyFocus) {
@@ -55,11 +59,14 @@
     $('#controllers').click(function(e){
       e.preventDefault();
       if (e.target.href) {
-        var target = e.target.innerHTML;
-        var searchTest = new pb.setupFormSubmission(target);
-        console.log(searchTest);
+        var target = e.target.innerHTML,
+            // New ApiUrl instance
+            contlr = new pb.ApiUrl(target);
+        $(this).find('.current').removeClass('current');
+        $(e.target).parent().addClass('current');
       }
     });
+    $('#cSearch').click();
   }
 
 })();

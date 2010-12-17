@@ -5,7 +5,7 @@
   <link rel="stylesheet" href="styles.css" type="text/css" media="screen" />
 </head>
 <body>
-  
+ 
 <!-- Controller List -->
 <div id="navWrap">
   <ul id="controllers">
@@ -18,7 +18,7 @@
 <h1><img src="imgs/patron.png" /><span>Patron Buddy!!!</span><span class="motto">API Development Helper for You!</span></h1>
 
 <!-- Displays URL For API call -->
-<input type="text" name="output" placeholder="http://api.zappos.com/" value="" id="output" />
+<input type="text" name="output" placeholder="http://www.zappos.com/api/" value="" id="output" />
 
 
 <div id="input">
@@ -33,7 +33,7 @@
   
   <!-- API request form -->
   <form action="" method="get" id="inputForm">
-    <p>API key: <a href="http://groups.google.com/group/zappos_api/browse_thread/thread/b7e9432b70e3f0e0" title="How to get an API Key">Need One?</a></p>
+    <p>API key:<input type="checkbox" value="true" id="remember">remember? <a href="http://groups.google.com/group/zappos_api/browse_thread/thread/b7e9432b70e3f0e0" title="How to get an API Key">Need One?</a></p>
     <p><input class="single" type="text" name="apiKey" value="" id="apiKey" tabindex="1" /></p>
     <div id="optionsHook"></div>
     
@@ -42,7 +42,11 @@
 </div>
 
 <!-- JSON API request -->
-<div id="request"></div>
+<div id="request">
+  <pre><code>{
+    "Hello" : "World!"
+}</code></pre>
+</div>
 
 <!-- Recent Calls List -->
 <ol id="recents"></ol>
@@ -58,7 +62,6 @@
 <script src="js/lib/zappos.js"></script>
 <script src="js/global.js"></script>
 <script src="js/apiUrl.js"></script>
-<script src="js/apiUrl2.js"></script>
 <script src="js/controllers/product.js"></script>
 <script src="js/controllers/search.js"></script>
 <script src="js/controllers/image.js"></script>
