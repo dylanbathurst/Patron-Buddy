@@ -14,7 +14,7 @@ var Zappos = {
   search : function (args) {
     var params = args.options || {};
     params.term = args.term;
-    params.page = args.page.toString() || '1';
+    //params.page = args.page.toString() || '1';
     if (typeof args.filters !== 'undefined') params.filters = args.filters;
     
     Zappos._createAPICall('Search', params, 'GET', args.callback);

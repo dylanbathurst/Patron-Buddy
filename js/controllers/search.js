@@ -3,6 +3,58 @@
 // controller. Hopefully this will be turned
 // into an ajax call to get this object.
 pb.Search = {
+endPoints : [{
+"name": "Search",
+"endPoint": "/Search",
+"request_methods": [ "GET" ],
+"outputs": [ "application/json" ],
+"parameters": [
+  {
+    "name": "term",
+    "datatype": "string",
+    "description": "Returns a list of styles that matches the search term"
+  },
+  {
+    "name": "includes",
+    "datatype": "json_array",
+    "desciption": "Include specific options",
+    "valid_values": [ "results", "currentResultCount", "totalResultCount", "limit", "currentPage", "pageCount", "filters", "facets" ]
+  },
+  {
+    "name": "excludes",
+    "datatype": "json_array",
+    "description": "Exclude specific options",
+    "valid_values": [ "results", "currentResultCount", "totalResultCount", "limit", "currentPage", "pageCount", "filters", "facets" ]
+  },
+  {
+    "name": "sort",
+    "datatype": "json_map",
+    "description": "Specify the sort order of results",
+    "valid_keys": [ "price", "goLiveDate", "productPopularity", "recentSales", "brandNameFacet" ],
+    "valid_values": [ "asc", "desc" ]
+  },
+  {
+    "name": "limit",
+    "description": "Limit the number of results returned",                    
+    "datatype": "int"
+  },
+  {
+    "name": "page",
+    "datatype": "int"
+  },
+  {
+    "name": "facets",
+    "datatype": "json_list",
+    "valid_values": [ "productTypeFacet", "size", "width","color","price","brand" ]
+
+  },
+  {
+    "name": "filters",
+    "datatype": "json_multimap",
+    "valid_values": [ "productTypeFacet", "size", "width","color","price","brand" ]
+  }
+]
+}],
   requestInput: [
                           {term: 'string'}, 
                           {
@@ -29,8 +81,40 @@ pb.Search = {
                           }
                         ],
 
-  formHandler : function() {
-  
+  formHandler : function(ary) {
+    var len = ary.length,
+        formValues = {};
+    formValues.options = {};
+
+    console.log(ary);
+    for (var i = 1; i < len; i++) {
+      var key = ary[i].split('=')[0].replace(/^Z/,''),
+          value = ary[i].split('=')[1],
+          valueSub = value.substring(value.length - 3, value.length);
+
+      switch (key) {
+        case 'term':
+          formValues[key] = value;
+        break;
+        case 'limit':
+        case 'page':
+          if (value) {
+            formValues.options[key] = value;
+          }
+        break;
+        default:
+          if (valueSub == '%2C') {
+            value = value.substring(0, value.length - 3);
+          }
+
+          if (value) {
+            formValues.options[key] = value.split('%2C');
+          }
+        break;
+      }
+    }
+    formValues.apiKey = ary[0].split('=')[1];
+    return formValues;
   }
 };
 
