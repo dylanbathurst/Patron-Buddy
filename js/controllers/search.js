@@ -86,7 +86,7 @@ endPoints : [{
         formValues = {};
     formValues.options = {};
 
-    console.log(ary);
+    console.log(formValues);
     for (var i = 1; i < len; i++) {
       var key = ary[i].split('=')[0].replace(/^Z/,''),
           value = ary[i].split('=')[1],
@@ -94,12 +94,25 @@ endPoints : [{
 
       switch (key) {
         case 'term':
-          formValues[key] = value;
+          console.log('fo');
+          if (value) {
+            formValues[key] = value;
+          }
         break;
         case 'limit':
         case 'page':
           if (value) {
             formValues.options[key] = value;
+          }
+        break;
+        case 'filters':
+          if (value) {
+            formValues[key] = pb.controllers.twoDimensionalParam(value);
+          }
+        break;
+        case 'sort':
+          if (value) {
+            formValues.options[key] = pb.controllers.twoDimensionalParam(value);
           }
         break;
         default:
@@ -118,64 +131,27 @@ endPoints : [{
   }
 };
 
-// Adds all Search controller methods to the
-// controllers object.
-pb.controllers.checkZterm = function(id) {
-  return '?term=' + $(id).val();
-}
-
-pb.controllers.checkZsort = function(id) {
-  var val = $(id).val();
-  return val !== '' ? '&sort={' + pb.splitCommas(val, ':') + '}' : '';
-}
-
-pb.controllers.checkZlimit = function(id) {
-  var val = $(id).val();
-  return val !== '' ? '&limit=' + val : '';
-}
-
-pb.controllers.checkZpage = function(id) {
-  var val = $(id).val();
-  return val !== '' ? '&page=' + val : '';
-}
-
-pb.controllers.checkZfacets = function(id) {
-  var val = $(id).val();
-  return val !== '' ? '&facets=[' + pb.splitCommas(val, ',') + ']' : '';
-}
-
 // Filters are a pain in the ass and so this 
 // monstrosity loops and doops and finally poops
-// out the set filters in a pretty manner.
-pb.controllers.checkZfilters = function(id) {
-  var val = $(id).val();
-  if (val !== '') {
-    var filters = val.split('/');
-    var filterSplit = [];
-    var comma = ',';
-    var comma2 = ',';
-    var len = filters.length;
-    for (var i = 0; i < len; i++) {
-      if (i == len - 1) {
-        comma = '';
-      }
-      var commaFilter = filters[i].split(',');
-      var len2 = commaFilter.length;
-      for (var c = 0; c < len2; c++) {
-        if (c == len2 - 1) {
-          comma2 = '';
-        }
-        if (c == 0) {
-          filterSplit.push('"', commaFilter[0], '":[');
-        } else {
-          filterSplit.push('"', commaFilter[c], '"' + comma2);
-        }
-      }
-      filterSplit.push(']' + comma);
+pb.controllers.twoDimensionalParam = function (value) {
+  var val = value,
+      paramObject = {},
+      multiples = val.split('%2F'), // slits on the "/" character
+      len = multiples.length;
+
+  for (var i = 0; i < len; i++) {
+    var keyValues = multiples[i].split('%2C'),
+        key = keyValues[0],
+        inLen = keyValues.length;
+
+    paramObject[key] = [];
+
+    for (var j = 1; j < inLen; j++) {
+      paramObject[key].push(keyValues[j]); 
     }
-    
-    filterSplit.unshift('&filters={');
-    filterSplit.push('}');
-    return filterSplit.join('');
+
   }
+
+  return paramObject;
+
 }

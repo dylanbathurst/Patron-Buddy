@@ -197,7 +197,7 @@ var Zappos = {
           if (typeof obj[key] === 'string') {
             buffer.push('"' + key + '":"' + obj[key] + '"');
           } else {
-            buffer.push('"' + key + '":["' + obj[key].join('","') + '"]');
+            buffer.push('"' + key + '":["' + obj[key].join('","') + '"],'); //FIXME: Get rid of last comma
           }
         }
         serial.push(k + '={' + buffer.join('') + '}');
